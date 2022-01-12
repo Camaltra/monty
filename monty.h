@@ -44,11 +44,12 @@ typedef struct global
         char *lineBuff;
 } global;
 
-extern global globalVar;
+global globalVar;
 
 /* Prototype */
+void init_data(void);
 void checkInput(int argc);
-FILE *openFile(char *fileName);
+void openFile(char *fileName);
 void (*searchFn(void))(stack_t **stack_t, unsigned int line);
 void push(stack_t **stack_t, unsigned int line);
 int _strlen_letter(char *s);

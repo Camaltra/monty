@@ -1,7 +1,5 @@
 #include "monty.h"
 
-global globalVar = {NULL, NULL, NULL, NULL};
-
 int main(int argc, char **argv)
 {
     unsigned int line = 1;
@@ -9,9 +7,8 @@ int main(int argc, char **argv)
     void (*f)(stack_t **stack_t, unsigned int line);
 
     checkInput(argc);
-
-    globalVar.file = openFile(argv[1]);
-
+    init_data();
+    openFile(argv[1]);
     while(getline(&globalVar.lineBuff, &lineSize, globalVar.file) != -1)
     {
         if (globalVar.lineBuff[strlen(globalVar.lineBuff) - 1] == '\n')
@@ -48,16 +45,15 @@ void checkInput(int argc)
     return;
 }
 
-FILE *openFile(char *fileName)
+void openFile(char *fileName)
 {
-    FILE *fd = fopen(fileName, "r");
+    globalVar.file = fopen(fileName, "r");
 
-    if (!fd)
+    if (!globalVar.file)
     {
         dprintf(STDERR_FILENO, "Error: Can't open file %s\n", fileName);
         exit(EXIT_FAILURE);
     }
-    return (fd);
 }
 
 void (*searchFn(void))(stack_t **stack_t, unsigned int line)
@@ -237,4 +233,12 @@ void pop(stack_t **stack, unsigned int line_number)
 	}
 	free(browse);
     return;
+}
+
+void init_data(void)
+{
+    globalVar.lineBuff = NULL;
+    globalVar.head = NULL;
+    globalVar.arrayCommand = NULL;
+    globalVar.file = NULL;
 }
