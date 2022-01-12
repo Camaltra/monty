@@ -51,8 +51,7 @@ void pall(stack_t **stack, unsigned int line_number)
 
 	if (stack == NULL)
 	{
-		printf("L%d: can't pint, stack empty\n", line_number);
-		EXIT_FAILURE;
+		return;
 	}
 	while (browse != NULL)
 	{
@@ -87,6 +86,15 @@ void pop(stack_t **stack, unsigned int line_number)
 	unsigned int i = 0;
 	stack_t *browse = *stack;
 
+	if (*stack == NULL)
+	{
+		dprintf(STDERR_FILENO, "L%d: can't pop an empty stack\n", line_number);
+		free(globalVar.lineBuff);
+		freeAll();
+		fclose(globalVar.file);
+		exit(EXIT_FAILURE);
+	}
+	
 	if (browse->next == NULL)
 		*stack = NULL;
 	else if (browse->next != NULL)
