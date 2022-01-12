@@ -4,3 +4,7 @@ push 4
 push 5
 pall
 pint
+nline
+print Test
+nline
+pall
