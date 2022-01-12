@@ -160,6 +160,7 @@ void nop(stack_t **stack, unsigned int line_number)
 {
 }
 
+/**
 * add - Add two nodes content in one and remove the top node
 *
 * @stack: The stack.
@@ -170,17 +171,13 @@ void add(stack_t **stack, unsigned int line_number)
 	stack_t *browse = *stack;
 	int count = 0;
 
-	if (stack == NULL)
-	{
-		printf("L%d: can't pint, stack empty\n", line_number);
-		freeAll();
-		EXIT_FAILURE;
-	}
-	if (browse->next == NULL)
+	if (*stack == NULL || browse->next == NULL)
 	{
 		printf("L%d: can't add, stack too short\n", line_number);
+		free(globalVar.lineBuff);
 		freeAll();
-		EXIT_FAILURE;
+		fclose(globalVar.file);
+		exit(EXIT_FAILURE);
 	}
 
 	count += browse->n;
@@ -196,9 +193,7 @@ void add(stack_t **stack, unsigned int line_number)
 		(*stack) = browse->next;
 	}
 	else if (browse->next == NULL)
-	{
 		browse->prev->next = NULL;
-	}
 	else
 	{
 		browse->next->prev = browse->prev;
@@ -218,35 +213,26 @@ void sub(stack_t **stack, unsigned int line_number)
 	stack_t *browse = *stack;
 	int count = 0;
 
-	if (stack == NULL)
-	{
-		printf("L%d: can't pint, stack empty\n", line_number);
-		freeAll();
-		EXIT_FAILURE;
-	}
-	if (browse->next == NULL)
+	if (*stack == NULL || browse->next == NULL)
 	{
 		printf("L%d: can't sub, stack too short\n", line_number);
+		free(globalVar.lineBuff);
 		freeAll();
-		EXIT_FAILURE;
+		fclose(globalVar.file);
+		exit(EXIT_FAILURE);
 	}
-
 	count -= browse->n;
 	browse = browse->next;
 	count += browse->n;
 	browse->n = count;
-
 	browse = browse->prev;
-
 	if (browse->next != NULL)
 	{
 		browse->next->prev = NULL;
 		(*stack) = browse->next;
 	}
 	else if (browse->next == NULL)
-	{
 		browse->prev->next = NULL;
-	}
 	else
 	{
 		browse->next->prev = browse->prev;
@@ -266,35 +252,26 @@ void mul(stack_t **stack, unsigned int line_number)
 	stack_t *browse = *stack;
 	int count = 0;
 
-	if (stack == NULL)
-	{
-		printf("L%d: can't pint, stack empty\n", line_number);
-		freeAll();
-		EXIT_FAILURE;
-	}
-	if (browse->next == NULL)
+	if (*stack == NULL || browse->next == NULL)
 	{
 		printf("L%d: can't mul, stack too short\n", line_number);
+		free(globalVar.lineBuff);
 		freeAll();
-		EXIT_FAILURE;
+		fclose(globalVar.file);
+		exit(EXIT_FAILURE);
 	}
-
 	count += browse->n;
 	browse = browse->next;
 	count *= browse->n;
 	browse->n = count;
-
 	browse = browse->prev;
-
 	if (browse->next != NULL)
 	{
 		browse->next->prev = NULL;
 		(*stack) = browse->next;
 	}
 	else if (browse->next == NULL)
-	{
 		browse->prev->next = NULL;
-	}
 	else
 	{
 		browse->next->prev = browse->prev;
@@ -314,43 +291,31 @@ void _div(stack_t **stack, unsigned int line_number)
 	stack_t *browse = *stack;
 	int count = 0;
 
-	if (stack == NULL)
+	if (*stack == NULL || browse->next == NULL || browse->n == 0)
 	{
-		printf("L%d: can't pint, stack empty\n", line_number);
+		if (!*stack || !browse->next)
+			printf("L%d: can't div, stack too short\n", line_number);
+		else if (browse->n == 0)
+			printf("L%d: division by zero\n", line_number);
+		free(globalVar.lineBuff);
 		freeAll();
-		EXIT_FAILURE;
+		fclose(globalVar.file);
+		exit(EXIT_FAILURE);
 	}
-	if (browse->next == NULL)
-	{
-		printf("L%d: can't div, stack too short\n", line_number);
-		freeAll();
-		EXIT_FAILURE;
-	}
-	if (browse->n == 0)
-	{
-		printf("L%d: division by zero\n", line_number);
-		freeAll();
-		EXIT_FAILURE;
-	}
-
 	browse = browse->next;
 	count += browse->n;
 	browse = browse->prev;
 	count /= browse->n;
 	browse = browse->next;
 	browse->n = count;
-
 	browse = browse->prev;
-
 	if (browse->next != NULL)
 	{
 		browse->next->prev = NULL;
 		(*stack) = browse->next;
 	}
 	else if (browse->next == NULL)
-	{
 		browse->prev->next = NULL;
-	}
 	else
 	{
 		browse->next->prev = browse->prev;
@@ -370,43 +335,31 @@ void mod(stack_t **stack, unsigned int line_number)
 	stack_t *browse = *stack;
 	int count = 0;
 
-	if (stack == NULL)
+	if (*stack == NULL || browse->next == NULL || browse->n == 0)
 	{
-		printf("L%d: can't pint, stack empty\n", line_number);
+		if (!*stack || !browse->next)
+			printf("L%d: can't mod, stack too short\n", line_number);
+		else if (browse->n == 0)
+			printf("L%d: division by zero\n", line_number);
+		free(globalVar.lineBuff);
 		freeAll();
-		EXIT_FAILURE;
+		fclose(globalVar.file);
+		exit(EXIT_FAILURE);
 	}
-	if (browse->next == NULL)
-	{
-		printf("L%d: can't mod, stack too short\n", line_number);
-		freeAll();
-		EXIT_FAILURE;
-	}
-	if (browse->n == 0)
-	{
-		printf("L%d: division by zero\n", line_number);
-		freeAll();
-		EXIT_FAILURE;
-	}
-
 	browse = browse->next;
 	count += browse->n;
 	browse = browse->prev;
 	count %= browse->n;
 	browse = browse->next;
 	browse->n = count;
-
 	browse = browse->prev;
-
 	if (browse->next != NULL)
 	{
 		browse->next->prev = NULL;
 		(*stack) = browse->next;
 	}
 	else if (browse->next == NULL)
-	{
 		browse->prev->next = NULL;
-	}
 	else
 	{
 		browse->next->prev = browse->prev;
