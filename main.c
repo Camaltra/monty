@@ -61,7 +61,9 @@ void (*searchFn(void))(stack_t **stack_t, unsigned int line)
 		{"pop", pop},
 		/*
 		{"nop", nop},
+		*/
 		{"add", add},
+		/*
 		{"swap", swap},
 		{"pint", pint},
 		*/

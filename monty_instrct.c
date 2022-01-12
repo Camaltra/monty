@@ -105,3 +105,44 @@ void pop(stack_t **stack, unsigned int line_number)
 	free(browse);
 }
 
+void add(stack_t **stack, unsigned int line_number)
+{
+	stack_t *browse = *stack;
+	int count = 0;
+
+	if (stack == NULL)
+	{
+		printf("L%d: can't pint, stack empty\n", line_number);
+		freeAll();
+		EXIT_FAILURE;
+	}
+	if (browse->next == NULL)
+	{
+		printf("L%d: can't add, stack too short\n", line_number);
+		freeAll();
+		EXIT_FAILURE;
+	}
+
+	count += browse->n;
+	browse = browse->next;
+	count += browse->n;
+	browse->n = count;
+
+	browse = browse->prev;
+
+	if(browse->next != NULL)
+	{
+		browse->next->prev = NULL;
+		(*stack) = browse->next;
+	}
+	else if (browse->next == NULL)
+	{
+		browse->prev->next = NULL;
+	}
+	else
+	{
+		browse->next->prev = browse->prev;
+		browse->prev->next = browse->next;
+	}
+	free(browse);
+}
