@@ -115,18 +115,30 @@ void pop(stack_t **stack, unsigned int line_number)
 /**
 * newLine - Print a new line to make test clear
 *
-* Return: Anything, cause void function
+* @stack: The stack.
+* @line_number: The num of the line
+*
+* Return: Nothing, cause void function
 */
 void newLine(stack_t **stack, unsigned int line_number)
 {
 	printf("\n");
 }
 
+/**
+* printElem - Print an instruction given in parameters
+*
+* @stack: The stack.
+* @line_number: The num of the line
+*
+* Return: Nothing, cause void function
+*/
 void printElem(stack_t **stack, unsigned int line_number)
 {
 	if (globalVar.arrayCommand[1] == NULL)
 	{
-		dprintf(STDERR_FILENO, "L%d: No instructions | print instructions\n", line_number);
+		dprintf(STDERR_FILENO,
+		"L%d: No instructions | print instructions\n", line_number);
 		free(globalVar.lineBuff);
 		freeAll();
 		fclose(globalVar.file);
