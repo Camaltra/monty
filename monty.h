@@ -1,6 +1,7 @@
 #ifndef MONTY_H
 #define MONTY_H
 
+#define  _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -71,6 +72,11 @@ void pint(stack_t **stack, unsigned int line_number);
 void printElem(stack_t **stack, unsigned int line_number);
 void newLine(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
+void add(stack_t **stack, unsigned int line_number);
+void sub(stack_t **stack, unsigned int line_number);
+void mul(stack_t **stack, unsigned int line_number);
+void _div(stack_t **stack, unsigned int line_number);
+void mod(stack_t **stack, unsigned int line_number);
 
 /* STR USEFULL */
 int _strlen_letter(char *s);

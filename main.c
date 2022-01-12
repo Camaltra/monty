@@ -63,8 +63,12 @@ void (*searchFn(void))(stack_t **stack_t, unsigned int line)
 		{"nline", newLine},
 		{"print", printElem},
 		{"nop", nop},
-		/*
 		{"add", add},
+		{"sub", sub},
+		{"mul", mul},
+		{"div", _div},
+		{"mod", mod},
+		/*
 		{"swap", swap},
 		*/
 		{"NULL", NULL},
