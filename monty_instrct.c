@@ -94,7 +94,7 @@ void pop(stack_t **stack, unsigned int line_number)
 		fclose(globalVar.file);
 		exit(EXIT_FAILURE);
 	}
-	
+
 	if (browse->next == NULL)
 		*stack = NULL;
 	else if (browse->next != NULL)
@@ -105,6 +105,12 @@ void pop(stack_t **stack, unsigned int line_number)
 	free(browse);
 }
 
+/**
+* add - Add two nodes content in one and remove the top node
+*
+* @stack: The stack.
+* @line_number: The num of the line.
+*/
 void add(stack_t **stack, unsigned int line_number)
 {
 	stack_t *browse = *stack;
@@ -130,7 +136,7 @@ void add(stack_t **stack, unsigned int line_number)
 
 	browse = browse->prev;
 
-	if(browse->next != NULL)
+	if (browse->next != NULL)
 	{
 		browse->next->prev = NULL;
 		(*stack) = browse->next;
