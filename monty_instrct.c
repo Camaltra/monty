@@ -135,3 +135,16 @@ void printElem(stack_t **stack, unsigned int line_number)
 
 	printf("%s\n", globalVar.arrayCommand[1]);
 }
+
+/**
+* nop - Do nothing
+*
+* @stack: The stack.
+* @line_number: The num of the line
+*
+* Return: Nothing, cause void function
+*/
+void nop(stack_t **stack, unsigned int line_number)
+{
+
+}
