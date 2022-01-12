@@ -46,7 +46,6 @@ void push(stack_t **stack, unsigned int line_number)
 */
 void pall(stack_t **stack, unsigned int line_number)
 {
-	int i = line_number;
 	stack_t *browse = *stack;
 
 	if (stack == NULL)
@@ -92,7 +91,6 @@ void pint(stack_t **stack, unsigned int line_number)
 */
 void pop(stack_t **stack, unsigned int line_number)
 {
-	unsigned int i = 0;
 	stack_t *browse = *stack;
 
 	if (*stack == NULL)
@@ -114,3 +112,39 @@ void pop(stack_t **stack, unsigned int line_number)
 	free(browse);
 }
 
+/**
+* newLine - Print a new line to make test clear
+*
+* Return: Anything, cause void function
+*/
+void newLine(stack_t **stack, unsigned int line_number)
+{
+	printf("\n");
+}
+
+void printElem(stack_t **stack, unsigned int line_number)
+{
+	if (globalVar.arrayCommand[1] == NULL)
+	{
+		dprintf(STDERR_FILENO, "L%d: No instructions | print instructions\n", line_number);
+		free(globalVar.lineBuff);
+		freeAll();
+		fclose(globalVar.file);
+		exit(EXIT_FAILURE);
+	}
+
+	printf("%s\n", globalVar.arrayCommand[1]);
+}
+
+/**
+* nop - Do nothing
+*
+* @stack: The stack.
+* @line_number: The num of the line
+*
+* Return: Nothing, cause void function
+*/
+void nop(stack_t **stack, unsigned int line_number)
+{
+
+}

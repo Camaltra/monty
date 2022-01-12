@@ -68,6 +68,9 @@ void push(stack_t **stack_t, unsigned int line);
 void pall(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
+void printElem(stack_t **stack, unsigned int line_number);
+void newLine(stack_t **stack, unsigned int line_number);
+void nop(stack_t **stack, unsigned int line_number);
 
 /* STR USEFULL */
 int _strlen_letter(char *s);

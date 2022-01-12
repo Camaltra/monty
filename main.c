@@ -60,8 +60,10 @@ void (*searchFn(void))(stack_t **stack_t, unsigned int line)
 		{"pall", pall},
 		{"pop", pop},
 		{"pint", pint},
-		/*
+		{"nline", newLine},
+		{"print", printElem},
 		{"nop", nop},
+		/*
 		{"add", add},
 		{"swap", swap},
 		*/

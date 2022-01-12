@@ -1,6 +1,9 @@
+print PushSomeElem
 push 3
-pint 
 push 4
-push 5
+push 4
 pall
-pint
+nline
+nline
+nop
+pall
