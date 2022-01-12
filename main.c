@@ -1,91 +1,137 @@
 #include "monty.h"
 
+/**
+* main - The heart of the program, transform the
+* given file code and compile it
+*
+* @argc: Num of arg
+* @argv: Array of arg
+*
+* Return: 0 (succes)
+*/
 int main(int argc, char **argv)
 {
-    unsigned int line = 1;
-    ssize_t lineSize;
-    void (*f)(stack_t **stack_t, unsigned int line);
+	unsigned int line = 1;
+	ssize_t lineSize;
+	void (*f)(stack_t **stack_t, unsigned int line);
 
-    checkInput(argc);
-    init_data();
-    openFile(argv[1]);
-    while(getline(&globalVar.lineBuff, &lineSize, globalVar.file) != -1)
-    {
-        if (globalVar.lineBuff[strlen(globalVar.lineBuff) - 1] == '\n')
-            globalVar.lineBuff[strlen(globalVar.lineBuff) - 1] = '\0';
-        if (strlen(globalVar.lineBuff) != 0)
-        {
-            _strtow(globalVar.lineBuff);
-            f = searchFn();
-            if (f == NULL)
-            {
-                free(globalVar.lineBuff);
-                freeAll();
-                fclose(globalVar.file);
-                exit(EXIT_FAILURE);
-            }
-            f(&globalVar.head, line);
-            freeArrayCommand();
-        }
-        line++;
-    }
-    free(globalVar.lineBuff);
-    fclose(globalVar.file);
-    freeList(globalVar.head);
-    return (0);
+	checkInput(argc);
+	init_data();
+	openFile(argv[1]);
+	while (getline(&globalVar.lineBuff, &lineSize, globalVar.file) != -1)
+	{
+		if (globalVar.lineBuff[strlen(globalVar.lineBuff) - 1] == '\n')
+			globalVar.lineBuff[strlen(globalVar.lineBuff) - 1] = '\0';
+		if (strlen(globalVar.lineBuff) != 0)
+		{
+			_strtow(globalVar.lineBuff);
+			f = searchFn();
+			if (f == NULL)
+			{
+				dprintf(STDERR_FILENO,
+				"L%d : unknown instruction %s\n", line, globalVar.arrayCommand[0]);
+				free(globalVar.lineBuff);
+				freeAll();
+				fclose(globalVar.file);
+				exit(EXIT_FAILURE);
+			}
+			f(&globalVar.head, line);
+			freeArrayCommand();
+		}
+		line++;
+	}
+	free(globalVar.lineBuff);
+	fclose(globalVar.file);
+	freeList(globalVar.head);
+	return (0);
 }
 
+/**
+* checkInput - Check if the command is right
+*
+* @argc: Number of arg
+*
+* Return: Nothing, cause void function
+*/
 void checkInput(int argc)
 {
-    if (argc != 2)
-    {
-        dprintf(STDERR_FILENO, "USAGE: monty file\n");
-        exit(EXIT_FAILURE);
-    }
-    return;
+	if (argc != 2)
+	{
+		dprintf(STDERR_FILENO, "USAGE: monty file\n");
+		exit(EXIT_FAILURE);
+	}
 }
 
+/**
+* openFile - Open the given file
+*
+* @fileName: The name of the file
+*
+* Return: Nothing, cause void function
+*/
 void openFile(char *fileName)
 {
-    globalVar.file = fopen(fileName, "r");
+	globalVar.file = fopen(fileName, "r");
 
-    if (!globalVar.file)
-    {
-        dprintf(STDERR_FILENO, "Error: Can't open file %s\n", fileName);
-        exit(EXIT_FAILURE);
-    }
+	if (!globalVar.file)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't open file %s\n", fileName);
+		exit(EXIT_FAILURE);
+	}
 }
 
+/**
+* searchFn - Search the good function to exe
+*
+* Return: Nothing, cause void function
+*/
 void (*searchFn(void))(stack_t **stack_t, unsigned int line)
 {
-    int j;
+	int j;
 
-    instruction_t p[] = {
-        {"push", push},
-        {"pall", pall},
-        {"pop", pop},
-        /**
-        {"nop", nop},
-        {"add", add},
-        {"swap", swap},
-        {"pint", pint},
-        */
-        {"NULL", NULL},
-    };
-    for (j = 0; p[j].opcode != NULL; j++)
-    {
-        if (strcmp("NULL", p[j].opcode) == 0)
-            break;
-        if (strcmp(globalVar.arrayCommand[0], p[j].opcode) == 0)
-            return (p[j].f);
-    }
+	instruction_t p[] = {
+		{"push", push},
+		{"pall", pall},
+		{"pop", pop},
+		/*
+		{"nop", nop},
+		{"add", add},
+		{"swap", swap},
+		{"pint", pint},
+		*/
+		{"NULL", NULL},
+	};
+	for (j = 0; p[j].opcode != NULL; j++)
+	{
+		if (strcmp("NULL", p[j].opcode) == 0)
+			break;
+		if (strcmp(globalVar.arrayCommand[0], p[j].opcode) == 0)
+			return (p[j].f);
+	}
 
-    return (NULL);
+	return (NULL);
 }
 
-void push(stack_t **stack, unsigned int line)
+/**
+* push - Push an elem to the top of the stack
+*
+* @stack: The stack.
+* @line_number: The num of the line
+*
+* Return: Nothing, cause void function
+*/
+void push(stack_t **stack, unsigned int line_number)
 {
-    stack_t *new;
+	stack_t *new;
+
+	if (globalVar.arrayCommand[1] == NULL)
+	{
+		dprintf(STDERR_FILENO, "L%d: usage: push integer\n", line_number);
+		free(globalVar.lineBuff);
+		freeAll();
+		fclose(globalVar.file);
+		exit(EXIT_FAILURE);
+	}
 
 	if (stack == NULL)
 		return;
@@ -93,18 +139,18 @@ void push(stack_t **stack, unsigned int line)
 	if (new == NULL)
 		return;
 
+
 	new->n = atoi(globalVar.arrayCommand[1]);
 	new->next = *stack;
 	new->prev = NULL;
 	if (*stack != NULL)
 		(*stack)->prev = new;
 	*stack = new;
-	return;
 }
 
 
 /**
- * strtow - splits a string into words.
+ * _strtow - splits a string into words.
  *
  * @str: String to splits
  *
@@ -192,33 +238,51 @@ int _strcount_word(char *str)
 }
 
 /**
-* pint - Prints the value at the top of the stack, followed by a new line.
+* pall - Prints the value at the top of the stack, followed by a new line.
 *
 *@stack: Stack where are stored the value.
 *@line_number: Line where we want to read.
+*
+* Return: Nothing cause void function
 */
 void pall(stack_t **stack, unsigned int line_number)
 {
-    int i = line_number;
-    stack_t *browse = *stack;
+	int i = line_number;
+	stack_t *browse = *stack;
 
-    if (stack == NULL)
-    {
-        printf("L%d: can't pint, stack empty\n", line_number);
-        EXIT_FAILURE;
-    }
-    while (browse != NULL)
-    {
-        printf("%d\n", browse->n);
-        browse = browse->next;
-    }
+	if (stack == NULL)
+	{
+		printf("L%d: can't pint, stack empty\n", line_number);
+		EXIT_FAILURE;
+	}
+	while (browse != NULL)
+	{
+		printf("%d\n", browse->n);
+		browse = browse->next;
+	}
 }
 
+/**
+* pint - Print the top elem of the stack
+*
+* @stack: The stack.
+* @line_number: The num of the line
+*
+* Return: Nothing, cause void function
+*/
 void pint(stack_t **stack, unsigned int line_number)
 {
-    return;
+
 }
 
+/**
+* pop - Remove the top elem of the stack
+*
+* @stack: The stack.
+* @line_number: The num of the line
+*
+* Return: Nothing, cause void function
+*/
 void pop(stack_t **stack, unsigned int line_number)
 {
 	unsigned int i = 0;
@@ -232,13 +296,17 @@ void pop(stack_t **stack, unsigned int line_number)
 		(*stack) = browse->next;
 	}
 	free(browse);
-    return;
 }
 
+/**
+* init_data - Init the global var data
+*
+* Return: Nothing, cause void function
+*/
 void init_data(void)
 {
-    globalVar.lineBuff = NULL;
-    globalVar.head = NULL;
-    globalVar.arrayCommand = NULL;
-    globalVar.file = NULL;
+	globalVar.lineBuff = NULL;
+	globalVar.head = NULL;
+	globalVar.arrayCommand = NULL;
+	globalVar.file = NULL;
 }

@@ -1,11 +1,10 @@
-push 8
-push 7
+push 4
+push 5
+push 
 pall
-
-
-
-push 7
+pop
 pall
-
-
+dfsdfsdfs
+push 3
+pall
 
