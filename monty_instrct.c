@@ -414,7 +414,8 @@ void pchar(stack_t **stack, unsigned int line_number)
 		if (*stack == NULL)
 			dprintf(STDERR_FILENO, "L%d: can't pchar, stack empty\n", line_number);
 		else if ((*stack)->n > 127 || (*stack)->n < 0)
-			dprintf(STDERR_FILENO, "L%d: can't pchar, value out of range\n", line_number);
+			dprintf(STDERR_FILENO,
+			"L%d: can't pchar, value out of range\n", line_number);
 		free(globalVar.lineBuff);
 		freeAll();
 		fclose(globalVar.file);
@@ -454,7 +455,7 @@ void pstr(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 *
 * Return: Anything, cause void function
 */
-void rotl(stack_t **stack, __attribute__((unused)) unsigned int line_number)
+void rotr(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 {
 	stack_t *browse = *stack;
 
@@ -478,7 +479,7 @@ void rotl(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 *
 * Return: Anything, cause void function
 */
-void rotr(stack_t **stack, __attribute__((unused)) unsigned int line_number)
+void rotl(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 {
 	stack_t *browse = *stack, *cur = *stack;
 
