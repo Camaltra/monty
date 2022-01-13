@@ -458,13 +458,18 @@ void pstr(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 void rotr(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 {
 	stack_t *browse = *stack;
+	int i = 0;
 
 	if (browse == NULL)
 		return;
 
 	while (browse->next)
+	{
+		i++;
 		browse = browse->next;
-
+	}
+	if (i == 0)
+		return;
 	browse->prev->next = NULL;
 	browse->next = (*stack);
 	browse->prev = NULL;
