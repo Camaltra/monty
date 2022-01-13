@@ -175,7 +175,7 @@ void add(stack_t **stack, unsigned int line_number)
 
 	if (*stack == NULL || browse->next == NULL)
 	{
-		printf("L%d: can't add, stack too short\n", line_number);
+		dprintf(STDERR_FILENO, "L%d: can't add, stack too short\n", line_number);
 		free(globalVar.lineBuff);
 		freeAll();
 		fclose(globalVar.file);
@@ -217,7 +217,7 @@ void sub(stack_t **stack, unsigned int line_number)
 
 	if (*stack == NULL || browse->next == NULL)
 	{
-		printf("L%d: can't sub, stack too short\n", line_number);
+		dprintf(STDERR_FILENO, "L%d: can't sub, stack too short\n", line_number);
 		free(globalVar.lineBuff);
 		freeAll();
 		fclose(globalVar.file);
@@ -256,7 +256,7 @@ void mul(stack_t **stack, unsigned int line_number)
 
 	if (*stack == NULL || browse->next == NULL)
 	{
-		printf("L%d: can't mul, stack too short\n", line_number);
+		dprintf(STDERR_FILENO, "L%d: can't mul, stack too short\n", line_number);
 		free(globalVar.lineBuff);
 		freeAll();
 		fclose(globalVar.file);
@@ -296,9 +296,9 @@ void _div(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL || browse->next == NULL || browse->n == 0)
 	{
 		if (!*stack || !browse->next)
-			printf("L%d: can't div, stack too short\n", line_number);
+			dprintf(STDERR_FILENO, "L%d: can't div, stack too short\n", line_number);
 		else if (browse->n == 0)
-			printf("L%d: division by zero\n", line_number);
+			dprintf(STDERR_FILENO, "L%d: division by zero\n", line_number);
 		free(globalVar.lineBuff);
 		freeAll();
 		fclose(globalVar.file);
@@ -342,9 +342,9 @@ void mod(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL || browse->next == NULL || browse->n == 0)
 	{
 		if (!*stack || !browse->next)
-			printf("L%d: can't mod, stack too short\n", line_number);
+			dprintf(STDERR_FILENO, "L%d: can't mod, stack too short\n", line_number);
 		else if (browse->n == 0)
-			printf("L%d: division by zero\n", line_number);
+			dprintf(STDERR_FILENO, "L%d: division by zero\n", line_number);
 		free(globalVar.lineBuff);
 		freeAll();
 		fclose(globalVar.file);
@@ -412,9 +412,9 @@ void pchar(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL || (*stack)->n > 128 || (*stack)->n < 0)
 	{
 		if (*stack == NULL)
-			printf("L%d: can't pchar, stack empty\n", line_number);
+			dprintf(STDERR_FILENO, "L%d: can't pchar, stack empty\n", line_number);
 		else if ((*stack)->n > 128 || (*stack)->n < 0)
-			printf("L%d: can't pchar, value out of range\n", line_number);
+			dprintf(STDERR_FILENO, "L%d: can't pchar, value out of range\n", line_number);
 		free(globalVar.lineBuff);
 		freeAll();
 		fclose(globalVar.file);

@@ -1,3 +1,4 @@
 push 4
-pint 
-kfdfdkls
+push -23
+push 4
+pall
