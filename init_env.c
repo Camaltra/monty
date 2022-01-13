@@ -45,4 +45,5 @@ void init_data(void)
 	globalVar.head = NULL;
 	globalVar.arrayCommand = NULL;
 	globalVar.file = NULL;
+	globalVar.etat = 0;
 }

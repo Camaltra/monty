@@ -12,7 +12,7 @@
 int main(int argc, char **argv)
 {
 	unsigned int line = 1;
-	ssize_t lineSize;
+	size_t lineSize;
 	void (*f)(stack_t **stack_t, unsigned int line);
 
 	checkInput(argc);
@@ -20,8 +20,7 @@ int main(int argc, char **argv)
 	openFile(argv[1]);
 	while (getline(&globalVar.lineBuff, &lineSize, globalVar.file) != -1)
 	{
-		if (globalVar.lineBuff[strlen(globalVar.lineBuff) - 1] == '\n')
-			globalVar.lineBuff[strlen(globalVar.lineBuff) - 1] = '\0';
+		processingLine();
 		if (strlen(globalVar.lineBuff) != 0)
 		{
 			_strtow(globalVar.lineBuff);
@@ -61,16 +60,20 @@ void (*searchFn(void))(stack_t **stack_t, unsigned int line)
 		{"pop", pop},
 		{"pint", pint},
 		{"nline", newLine},
-		{"print", printElem},
+		{"print", printElm},
 		{"nop", nop},
 		{"add", add},
 		{"sub", sub},
 		{"mul", mul},
 		{"div", _div},
 		{"mod", mod},
-		/*
 		{"swap", swap},
-		*/
+		{"pchar", pchar},
+		{"pstr", pstr},
+		{"rotl", rotl},
+		{"rotr", rotr},
+		{"stack", stack},
+		{"queue", queue},
 		{"NULL", NULL},
 	};
 	for (j = 0; p[j].opcode != NULL; j++)
@@ -82,4 +85,24 @@ void (*searchFn(void))(stack_t **stack_t, unsigned int line)
 	}
 
 	return (NULL);
+}
+
+/**
+* processingLine - Procces the line inputed into a work line
+*
+* Return: Anything, cause void function
+*/
+void processingLine(void)
+{
+	int i;
+
+	if (globalVar.lineBuff[strlen(globalVar.lineBuff) - 1] == '\n')
+		globalVar.lineBuff[strlen(globalVar.lineBuff) - 1] = '\0';
+	for (i = 0; globalVar.lineBuff[i]; i++)
+	{
+		if (globalVar.lineBuff[i] == '#')
+			globalVar.lineBuff[i] = '\0';
+		if (globalVar.lineBuff[i] == '\t')
+			globalVar.lineBuff[i] = ' ';
+	}
 }

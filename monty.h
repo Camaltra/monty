@@ -44,6 +44,7 @@ typedef struct instruction_s
 * @arrayCommand: The array of command
 * @head: Pointer to the linked list
 * @lineBuff: The pointer to the buffer getting line
+* @etat: 0 is stack, 1 is queue
 *
 */
 typedef struct global
@@ -52,6 +53,7 @@ typedef struct global
 	char **arrayCommand;
 	stack_t *head;
 	char *lineBuff;
+	int etat;
 } global;
 
 global globalVar;
@@ -62,6 +64,7 @@ global globalVar;
 void init_data(void);
 void checkInput(int argc);
 void openFile(char *fileName);
+void processingLine(void);
 
 /* FN COMMAND */
 void (*searchFn(void))(stack_t **stack_t, unsigned int line);
@@ -69,7 +72,7 @@ void push(stack_t **stack_t, unsigned int line);
 void pall(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
-void printElem(stack_t **stack, unsigned int line_number);
+void printElm(stack_t **stack, unsigned int line_number);
 void newLine(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
 void add(stack_t **stack, unsigned int line_number);
@@ -77,6 +80,16 @@ void sub(stack_t **stack, unsigned int line_number);
 void mul(stack_t **stack, unsigned int line_number);
 void _div(stack_t **stack, unsigned int line_number);
 void mod(stack_t **stack, unsigned int line_number);
+void swap(stack_t **stack, unsigned int line_number);
+void pchar(stack_t **stack, unsigned int line_number);
+void pstr(stack_t **stack, unsigned int line_number);
+void rotl(stack_t **stack, unsigned int line_number);
+void rotr(stack_t **stack, unsigned int line_number);
+stack_t *add_dnodeint_end(stack_t **head, const int n);
+stack_t *add_dnodeint(stack_t **head, const int n);
+void stack(stack_t **stack, unsigned int line_number);
+void queue(stack_t **stack, unsigned int line_number);
+int isNumber(char *str, int line_number);
 
 /* STR USEFULL */
 int _strlen_letter(char *s);
