@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 			if (f == NULL)
 			{
 				dprintf(STDERR_FILENO,
-				"L%d : unknown instruction %s\n", line, globalVar.arrayCommand[0]);
+				"L%d: unknown instruction %s\n", line, globalVar.arrayCommand[0]);
 				free(globalVar.lineBuff);
 				freeAll();
 				fclose(globalVar.file);
