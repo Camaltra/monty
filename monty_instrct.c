@@ -65,11 +65,11 @@ void pint(stack_t **stack, unsigned int line_number)
 {
 	if (*stack == NULL)
 	{
-		printf("L%d: can't pint, stack empty\n", line_number);
+		dprintf(STDERR_FILENO, "L%d: can't pint, stack empty\n", line_number);
 		free(globalVar.lineBuff);
 		freeAll();
 		fclose(globalVar.file);
-		exit(EXIT_FAILURE);
+		exit(0);
 	}
 
 	printf("%d\n", (*stack)->n);
