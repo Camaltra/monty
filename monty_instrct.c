@@ -609,6 +609,8 @@ int isNumber(char *str, int line_number)
 
 	for (i = 0; str[i]; i++)
 	{
+		if (str[i] == '-')
+			continue;
 		if (str[i] < '0' || str[i] > '9')
 		{
 			dprintf(STDERR_FILENO, "L%d: usage: push integer\n", line_number);
