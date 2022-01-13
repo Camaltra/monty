@@ -72,7 +72,7 @@ void pint(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-	printf("%d \n", (*stack)->n);
+	printf("%d\n", (*stack)->n);
 }
 
 /**
@@ -412,9 +412,9 @@ void pchar(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL || (*stack)->n > 128 || (*stack)->n < 0)
 	{
 		if (*stack == NULL)
-			printf("L%d: can't pchar, stack empty", line_number);
+			printf("L%d: can't pchar, stack empty\n", line_number);
 		else if ((*stack)->n > 128 || (*stack)->n < 0)
-			printf("L%d: can't pchar, value out of range", line_number);
+			printf("L%d: can't pchar, value out of range\n", line_number);
 		free(globalVar.lineBuff);
 		freeAll();
 		fclose(globalVar.file);
