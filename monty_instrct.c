@@ -387,7 +387,7 @@ void swap(stack_t **stack, unsigned int line_number)
 
 	if (browse == NULL || browse->next == NULL)
 	{
-		printf("L%d: can't swap, stack too short\n", line_number);
+		dprintf(STDERR_FILENO, "L%d: can't swap, stack too short\n", line_number);
 		free(globalVar.lineBuff);
 		freeAll();
 		fclose(globalVar.file);
