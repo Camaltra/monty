@@ -438,7 +438,7 @@ void pstr(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 
 	while (browse)
 	{
-		if (browse->n > 128 || browse->n <= 0)
+		if (browse->n > 127 || browse->n <= 0)
 			break;
 		putchar(browse->n);
 		browse = browse->next;
