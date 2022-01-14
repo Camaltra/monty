@@ -73,4 +73,4 @@
 <br><br>
 <hr>
 <br><br>
-Made with ♥ by [@Camaltra]](https://github.com/Camaltra) & [@MrOmnes](https://github.com/MrOmnes)
+Made with ♥ by [@Camaltra](https://github.com/Camaltra) & [@MrOmnes](https://github.com/MrOmnes)
